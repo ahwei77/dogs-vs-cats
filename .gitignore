@@ -1,0 +1,23 @@
+# Data files
+data/*.zip
+data/train.zip
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Model weights (optional, if too large)
+# model_weight/*.pth
