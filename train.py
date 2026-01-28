@@ -17,7 +17,7 @@ def main():
     
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    BATCH_SIZE = 32
+    BATCH_SIZE = 64
 
     # 載入資料與模型
     data_path = os.path.join(base_dir, 'data')
@@ -25,15 +25,19 @@ def main():
     model = get_model().to(device)
     
     # 定義優化器與損失函數
-    # 加入 weight_decay 降地過擬合
-    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-4)
+    # 加入 weight_decay 降低過擬合
+    optimizer = optim.Adam(model.parameters(), lr=0.0001, weight_decay=1e-5)
     criterion = nn.BCELoss()
-
+    #學習率調整
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=4
+    )
     # 訓練參數
-    num_epochs = 120
+    num_epochs = 100
     best_val_loss = float('inf')
     save_path = os.path.join(model_weight_dir, 'best_model.pth')
     
+
     # 紀錄歷史數據
     history = {
         'train_loss': [], 'val_loss': [],
@@ -74,7 +78,6 @@ def main():
         avg_train_acc = 100 * train_correct / train_total
         history['train_loss'].append(avg_train_loss)
         history['train_acc'].append(avg_train_acc)
-        plot_learning_curves(history['train_loss'], history['val_loss'], history['train_acc'], history['val_acc'])
         
         # 驗證階段
         model.eval()
@@ -104,6 +107,11 @@ def main():
         if (epoch + 1) % 10 == 0:
             epoch_save_path = os.path.join(model_weight_dir, f'model_epoch_{epoch+1}.pth')
             torch.save(model.state_dict(), epoch_save_path)
+        
+        # 學習率調整
+        scheduler.step(avg_val_loss)
+
+        plot_learning_curves(history['train_loss'], history['val_loss'], history['train_acc'], history['val_acc'])
         # 儲存最佳模型
         print(f"\nSummary - Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}")
         

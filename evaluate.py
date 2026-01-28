@@ -16,7 +16,7 @@ def main():
     data_path = os.path.join(base_dir, 'data')
     model_path = os.path.join(base_dir, 'model_weight', 'best_model.pth')
     
-    _, val_loader = get_dataloaders(os.path.join(data_path))
+    _, val_loader = get_dataloaders(data_path)
 
     model = get_model().to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
@@ -52,7 +52,7 @@ def main():
             if EXPORT_ERRORS:
                 for j in range(len(actuals)):
                     if preds[j] != actuals[j]:
-                        # 計算該樣本在全體圖片中的索引
+                        # 計算該圖在全部圖片中的索引
                         global_idx = val_indices[i * val_loader.batch_size + j]
                         img_path = original_dataset.images[global_idx]
                         img_name = os.path.basename(img_path)

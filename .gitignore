@@ -1,6 +1,5 @@
-# Data files (tracked by Git LFS)
-# data/*.zip - commented out to allow LFS tracking
-# data/train.zip - commented out to allow LFS tracking
+# Data files (exclude from repository)
+data/
 
 # Python cache
 __pycache__/

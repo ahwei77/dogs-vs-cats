@@ -1,7 +1,8 @@
 import os
 import torch
+import numpy as np
 from torchvision import transforms
-from torch.utils.data import DataLoader, Dataset, random_split
+from torch.utils.data import DataLoader, Dataset, Subset
 from PIL import Image
 
 class DogCatDataset(Dataset):
@@ -16,7 +17,7 @@ class DogCatDataset(Dataset):
 
 
         # 轉化數據集 狗1 貓0
-        for filename in os.listdir(img_dir):
+        for filename in sorted(os.listdir(img_dir)):
             if filename.endswith(('.jpg', '.jpeg', '.png')):
                 filepath = os.path.join(img_dir, filename)
                 # 狗貓標籤判定
@@ -47,14 +48,22 @@ class DogCatDataset(Dataset):
 
 def get_dataloaders(data_dir, batch_size=32, img_size=224):
     train_transform = transforms.Compose([
-        transforms.Resize((img_size, img_size)),
-
+        #transforms.Resize((img_size, img_size)),
         # 數據增強
         # 水平翻轉、隨機旋轉、亮度對比度飽和度調整
+        # transforms.RandomAffine(
+        #     degrees=40, 
+        #     translate=(0.2, 0.2), 
+        #     scale=(0.8, 1.2), 
+        #     shear=15,
+        #     interpolation=transforms.InterpolationMode.BILINEAR
+        # ),
+        transforms.RandomResizedCrop(img_size, scale=(0.2, 1.0)),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomRotation(15),
         transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
         transforms.ToTensor(),
+        transforms.RandomErasing(p=0.5, scale=(0.02, 0.2), value='random'),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
@@ -65,22 +74,27 @@ def get_dataloaders(data_dir, batch_size=32, img_size=224):
     ])
 
     train_path = os.path.join(data_dir, 'train','train')
-    full_dataset = DogCatDataset(train_path, transform=None)
-    
-    train_size = int(0.7 * len(full_dataset))
-    val_size = len(full_dataset) - train_size
-    
-    train_data, val_data = random_split(
-        full_dataset, 
-        [train_size, val_size],
-        generator=torch.Generator().manual_seed(42) 
-    )
-    
-    train_data.dataset.transform = train_transform 
-    val_data.dataset.transform = val_transform     
 
-    # Linux 環境下 num_workers 可設高一些提升效能
-    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
-    val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=0)
+
+    train_dataset = DogCatDataset(train_path, transform=train_transform)
+    val_dataset = DogCatDataset(train_path, transform=val_transform)
+
+    dataset_size = len(train_dataset)
+    indices = list(range(dataset_size))
+    split = int(0.7 * dataset_size)
+
+
+    np.random.seed(42)
+    np.random.shuffle(indices)
+    train_indices = indices[:split]
+    val_indices = indices[split:]
+
+    train_loader = DataLoader(Subset(train_dataset, train_indices),batch_size=batch_size, shuffle=True, num_workers=0)
+
+    val_loader = DataLoader(Subset(val_dataset, val_indices),batch_size=batch_size, shuffle=False, num_workers=0)
+
+    # # Linux 環境下 num_workers 可設高一些提升效能
+    # train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
+    # val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=0)
     
     return train_loader, val_loader
