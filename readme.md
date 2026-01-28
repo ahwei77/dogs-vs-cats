@@ -34,8 +34,6 @@ git clone https://github.com/ahwei77/dogs-vs-cats.git
 cd dogs-vs-cats
 ```
 
-或使用 HTTPS 連結：[複製此專案](https://github.com/ahwei77/dogs-vs-cats)
-
 ### 2. 建立虛擬環境 (建議)：
 
 ```bash
