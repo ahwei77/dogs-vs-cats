@@ -23,7 +23,9 @@ dogs-vs-cats/
 ├── requirements.txt            # Python 環境依賴清單
 ├── results.png                 # 混淆矩陣與 ROC 曲線圖
 ├── learning_curves.png         # 訓練過程 Loss/Acc 曲線圖
-└── README.md                   
+└── README.md
+```
+
 
 ## 安裝與環境設定
 
