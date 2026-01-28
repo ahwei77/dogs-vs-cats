@@ -3,7 +3,7 @@
 本專案是一個基於 PyTorch 的貓狗影像分辨系統，使用 **ResNet18** 作為骨幹網路。
 
 
-目錄結構如下，為了確保程式能正確讀取圖片，請務必維持以下結構。若使用 Kaggle (https://www.kaggle.com/competitions/dogs-vs-cats/data)下載的 train.zip或是本專案內data/train.zip，解壓縮後可能會有兩層 train/，請確認路徑層級如下：
+目錄結構如下，為了確保程式能正確讀取圖片，請務必維持以下結構。若使用 Kaggle (https://www.kaggle.com/competitions/dogs-vs-cats/data) 下載的 train.zip或是本專案內data/train.zip，解壓縮後可能會有兩層 train/，請確認路徑層級如下：
 ```text
 dogs-vs-cats/
 ├── data/
