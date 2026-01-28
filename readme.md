@@ -25,26 +25,25 @@ dogs-vs-cats/
 ├── learning_curves.png         # 訓練過程 Loss/Acc 曲線圖
 └── README.md                   
 
-安裝與環境設定
-複製專案：
-
+## 安裝與環境設定
+1.複製專案：
 git clone <你的專案連結>
 cd dogs-vs-cats
-建立虛擬環境 (建議)：
+2.建立虛擬環境 (建議)：
 
 python -m venv venv
 source venv/bin/activate  # Mac/Linux
 
-安裝依賴套件：
+3.安裝依賴套件：
 pip install -r requirements.txt
 
 
-## 使用說明
+## 說明
 
 ### 1. 資料準備
 請將 train.zip 放入 data/ 資料夾中並解壓縮
 
-> ⚠️ **重要**：確認 `data/train/train/` 底下直接就是 `.jpg` 檔案
+>  **注意**：確認 `data/train/train/` 底下直接就是 `.jpg` 檔案
 
 ### 2. 開始訓練
 執行以下指令開始訓練模型。程式會自動將最佳權重儲存在 `model_weight/`：
@@ -60,7 +59,7 @@ python train.py
 python evaluate.py
 ```
 
-> 💡 **提示**：在 `evaluate.py` 中可以藉由設置 `EXPORT_ERRORS = 1`（預設為 0，只輸出 Accuracy、Precision、Recall），程式會將模型判斷錯誤的圖片，存入至 `error_analysis/` 資料夾中
+>  **注意**：在 `evaluate.py` 中可以藉由設置 `EXPORT_ERRORS = 1`（預設為 0，只輸出 Accuracy、Precision、Recall），程式會將模型判斷錯誤的圖片，存入至 `error_analysis/` 資料夾中
 
 ## 訓練結果展示
 
