@@ -86,7 +86,7 @@ python evaluate.py
 * 隨機水平翻轉 (RandomHorizontalFlip)：增加影像的方向多樣性。
 * 隨機旋轉 (RandomRotation)：模擬不平整或傾斜的拍攝角度。
 * 色彩抖動 (Color Jitter)：隨機調整影像的亮度、對比度、飽和度，增強模型對不同光照環境的魯棒性。
-* 隨機擦除 (RandomErasing)：隨機遮蔽影像部分區域，強迫模型學習辨識局部特徵。
+* 隨機擦除 (RandomErasing)：隨機遮蔽影像部分區域，使模型學習辨識局部特徵。
 
 ### 學習曲線 (Learning Curves)
 
