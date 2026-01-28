@@ -50,14 +50,8 @@ def get_dataloaders(data_dir, batch_size=32, img_size=224):
     train_transform = transforms.Compose([
         #transforms.Resize((img_size, img_size)),
         # 數據增強
-        # 水平翻轉、隨機旋轉、亮度對比度飽和度調整
-        # transforms.RandomAffine(
-        #     degrees=40, 
-        #     translate=(0.2, 0.2), 
-        #     scale=(0.8, 1.2), 
-        #     shear=15,
-        #     interpolation=transforms.InterpolationMode.BILINEAR
-        # ),
+        # 水平翻轉、隨機旋轉、亮度對比度飽和度調整、隨機裁剪、隨機擦除
+
         transforms.RandomResizedCrop(img_size, scale=(0.2, 1.0)),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomRotation(15),
