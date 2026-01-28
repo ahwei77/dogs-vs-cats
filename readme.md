@@ -78,11 +78,21 @@ python evaluate.py
 總共訓練 100 個 epoch
 - Learning Rate: `0.0001`
 - Batch Size: `64`
+
+## 數據增強
+
+在資料預處理階段，我套用了多種數據增強技術以提升模型的泛化能力，避免針對特定場景產生過擬合：
+* 隨機裁剪與縮放 (RandomResizedCrop)：模擬不同距離與角度的拍攝情況。
+* 隨機水平翻轉 (RandomHorizontalFlip)：增加影像的方向多樣性。
+* 隨機旋轉 (RandomRotation)：模擬不平整或傾斜的拍攝角度。
+* 色彩抖動 (Color Jitter)：隨機調整影像的亮度、對比度、飽和度，增強模型對不同光照環境的魯棒性。
+* 隨機擦除 (RandomErasing)：隨機遮蔽影像部分區域，強迫模型學習辨識局部特徵。
+
 ### 學習曲線 (Learning Curves)
 
 ![Learning Curves](./learning_curves.png)
 
-### 評估指標 (Evaluation Metrics)
+### 評估指標 (混淆矩陣,ROC曲線)
 
 | 指標 | 數值 |
 |------|------|
