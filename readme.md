@@ -26,16 +26,26 @@ dogs-vs-cats/
 └── README.md                   
 
 ## 安裝與環境設定
-1.複製專案：
+
+### 1. 複製專案：
+
+```bash
 git clone <你的專案連結>
 cd dogs-vs-cats
-2.建立虛擬環境 (建議)：
+```
 
+### 2. 建立虛擬環境 (建議)：
+
+```bash
 python -m venv venv
 source venv/bin/activate  # Mac/Linux
+```
 
-3.安裝依賴套件：
+### 3. 安裝依賴套件：
+
+```bash
 pip install -r requirements.txt
+```
 
 
 ## 說明
