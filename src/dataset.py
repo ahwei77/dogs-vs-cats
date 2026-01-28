@@ -83,12 +83,8 @@ def get_dataloaders(data_dir, batch_size=32, img_size=224):
     train_indices = indices[:split]
     val_indices = indices[split:]
 
+
     train_loader = DataLoader(Subset(train_dataset, train_indices),batch_size=batch_size, shuffle=True, num_workers=0)
-
     val_loader = DataLoader(Subset(val_dataset, val_indices),batch_size=batch_size, shuffle=False, num_workers=0)
-
-    # # Linux 環境下 num_workers 可設高一些提升效能
-    # train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
-    # val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=0)
     
     return train_loader, val_loader
