@@ -20,3 +20,4 @@ ENV/
 
 # Model weights (optional, if too large)
 # model_weight/*.pth
+.DS_Store
