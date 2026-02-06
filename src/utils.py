@@ -17,12 +17,15 @@ def plot_metrics_and_roccurve(y_true, y_probs):
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
     # 混淆矩陣
-    cm = confusion_matrix(y_true, y_pred)
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax1, xticklabels=['Cat', 'Dog'], yticklabels=['Cat', 'Dog'])
+    cm = confusion_matrix(y_true, y_pred, labels=[1, 0])
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax1, xticklabels=['Dog', 'Cat'], yticklabels=['Dog', 'Cat'])
     ax1.set_title('Confusion Matrix')
+    ax1.set_xlabel('Predicted Label')
+    ax1.set_ylabel('True Label')
     # ROC曲線
     fpr, tpr, _ = roc_curve(y_true, y_probs)
-    ax2.plot(fpr, tpr, label=f'AUC = {auc(fpr, tpr):.2f}')
+    ax2.plot(fpr, tpr, label=f'AUC = {auc(fpr, tpr):.3f}')
+    ax2.plot([0, 1], [0, 1], 'k--')
     ax2.set_title('ROC Curve')
     ax2.legend()
     save_path = os.path.join(based_dir, 'results.png') 
